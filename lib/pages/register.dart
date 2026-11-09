@@ -17,6 +17,7 @@ class _RegisterPageState extends State<RegisterPage> {
   final _phoneController = TextEditingController();
   final _addressController = TextEditingController();
   String? _gender;
+  String? _programStudi;
 
   @override
   void dispose() {
@@ -110,6 +111,26 @@ class _RegisterPageState extends State<RegisterPage> {
                     prefixIcon: Icon(Icons.phone_outlined),
                     border: OutlineInputBorder(),
                   ),
+                ),
+                const SizedBox(height: 16),
+                DropdownButtonFormField<String>(
+                  initialValue: _programStudi,
+                  decoration: const InputDecoration(
+                    labelText: ' Program Studi',
+                    prefixIcon: Icon(Icons.wc),
+                    border: OutlineInputBorder(),
+                  ),
+                  items: const [
+                    DropdownMenuItem(
+                      value: 'TIF',
+                      child: Text('Teknik Informatika'),
+                    ),
+                    DropdownMenuItem(
+                      value: 'MIF',
+                      child: Text('Manajemen Informatika'),
+                    ),
+                  ],
+                  onChanged: (value) => setState(() => _programStudi = value), validator: (value) => value == null ? 'Pilih program studi' : null,
                 ),
                 const SizedBox(height: 16),
                 // TextFormField Alamat
