@@ -40,4 +40,34 @@ void main() {
 
     expect(find.text('Login berhasil untuk NIM: A12345678'), findsOneWidget);
   });
+
+  testWidgets('register page validates and submits student data', (
+    WidgetTester tester,
+  ) async {
+    await tester.pumpWidget(const MyApp());
+
+    await tester.tap(find.text('Belum punya akun? Daftar'));
+    await tester.pumpAndSettle();
+    expect(find.text('Daftar Mahasiswa'), findsOneWidget);
+
+    await tester.tap(find.text('Daftar'));
+    await tester.pump();
+    expect(find.text('Nama lengkap wajib diisi'), findsOneWidget);
+    expect(find.text('NIM wajib diisi'), findsOneWidget);
+    expect(find.text('Pilih jenis kelamin'), findsOneWidget);
+
+    await tester.enterText(find.byType(TextFormField).first, 'Budi Santoso');
+    await tester.enterText(find.byType(TextFormField).at(1), 'B12345678');
+    await tester.tap(find.byType(DropdownButtonFormField<String>));
+    await tester.pumpAndSettle();
+    await tester.tap(find.text('Laki-laki').last);
+    await tester.pumpAndSettle();
+    await tester.tap(find.text('Daftar'));
+    await tester.pump();
+
+    expect(
+      find.text('Pendaftaran berhasil untuk Budi Santoso'),
+      findsOneWidget,
+    );
+  });
 }
