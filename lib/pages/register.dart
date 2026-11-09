@@ -79,6 +79,28 @@ class _RegisterPageState extends State<RegisterPage> {
                 const SizedBox(height: 16),
                 StudentIdField(controller: _nimController),
                 const SizedBox(height: 16),
+                
+                DropdownButtonFormField<String>(
+                  initialValue: _gender,
+                  decoration: const InputDecoration(
+                    labelText: 'Jenis kelamin',
+                    prefixIcon: Icon(Icons.wc),
+                    border: OutlineInputBorder(),
+                  ),
+                  items: const [
+                    DropdownMenuItem(
+                      value: 'Laki-laki',
+                      child: Text('Laki-laki'),
+                    ),
+                    DropdownMenuItem(
+                      value: 'Perempuan',
+                      child: Text('Perempuan'),
+                    ),
+                  ],
+                  onChanged: (value) => setState(() => _gender = value),
+                ),
+                const SizedBox(height: 16),
+                
                 // TextFormField No HP
                 TextFormField(
                   controller: _phoneController,
@@ -102,25 +124,6 @@ class _RegisterPageState extends State<RegisterPage> {
                   ),
                 ),
                 const SizedBox(height: 16),
-                DropdownButtonFormField<String>(
-                  initialValue: _gender,
-                  decoration: const InputDecoration(
-                    labelText: 'Jenis kelamin',
-                    prefixIcon: Icon(Icons.wc),
-                    border: OutlineInputBorder(),
-                  ),
-                  items: const [
-                    DropdownMenuItem(
-                      value: 'Laki-laki',
-                      child: Text('Laki-laki'),
-                    ),
-                    DropdownMenuItem(
-                      value: 'Perempuan',
-                      child: Text('Perempuan'),
-                    ),
-                  ],
-                  onChanged: (value) => setState(() => _gender = value),
-                ),
                 const SizedBox(height: 24),
                 FilledButton(
                   onPressed: _submitForm,
