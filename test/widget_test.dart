@@ -11,20 +11,33 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:flutte_form_login_register/main.dart';
 
 void main() {
-  testWidgets('Counter increments smoke test', (WidgetTester tester) async {
-    // Build our app and trigger a frame.
+  testWidgets('login form validates and submits valid student data', (
+    WidgetTester tester,
+  ) async {
     await tester.pumpWidget(const MyApp());
 
-    // Verify that our counter starts at 0.
-    expect(find.text('0'), findsOneWidget);
-    expect(find.text('1'), findsNothing);
+    expect(find.text('Login Mahasiswa'), findsOneWidget);
+    expect(
+      tester.getTopLeft(find.text('NIM')).dy,
+      lessThan(tester.getTopLeft(find.text('Jenis kelamin')).dy),
+    );
+    expect(find.text('Jenis kelamin'), findsOneWidget);
+    expect(find.text('NIM'), findsOneWidget);
 
-    // Tap the '+' icon and trigger a frame.
-    await tester.tap(find.byIcon(Icons.add));
+    await tester.tap(find.text('Masuk'));
+    await tester.pump();
+    expect(find.text('Pilih jenis kelamin'), findsOneWidget);
+    expect(find.text('NIM wajib diisi'), findsOneWidget);
+
+    await tester.tap(find.byType(DropdownButtonFormField<String>));
+    await tester.pumpAndSettle();
+    await tester.tap(find.text('Perempuan').last);
+    await tester.pumpAndSettle();
+
+    await tester.enterText(find.byType(TextFormField), 'a12345678');
+    await tester.tap(find.text('Masuk'));
     await tester.pump();
 
-    // Verify that our counter has incremented.
-    expect(find.text('0'), findsNothing);
-    expect(find.text('1'), findsOneWidget);
+    expect(find.text('Login berhasil untuk NIM: A12345678'), findsOneWidget);
   });
 }
