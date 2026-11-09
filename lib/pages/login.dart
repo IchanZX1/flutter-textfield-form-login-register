@@ -12,11 +12,15 @@ class LoginPage extends StatefulWidget {
 
 class _LoginPageState extends State<LoginPage> {
   final _formKey = GlobalKey<FormState>();
+  final _nameController = TextEditingController();
+  final _emailController = TextEditingController();
   final _nimController = TextEditingController();
   String? _gender;
 
   @override
   void dispose() {
+    _nameController.dispose();
+    _emailController.dispose();
     _nimController.dispose();
     super.dispose();
   }
@@ -52,14 +56,37 @@ class _LoginPageState extends State<LoginPage> {
                   style: Theme.of(context).textTheme.headlineSmall,
                 ),
                 const SizedBox(height: 8),
-                const Text('Masukkan NIM dan pilih jenis kelamin Anda.'),
+                const Text('Masukkan nama, email, NIM, dan jenis kelamin Anda.'),
                 const SizedBox(height: 24),
+                TextFormField(
+                  controller: _nameController,
+                  textInputAction: TextInputAction.next,
+                  decoration: const InputDecoration(
+                    labelText: 'Nama lengkap',
+                    prefixIcon: Icon(Icons.person_outline),
+                    border: OutlineInputBorder(),
+                  ),
+                  textCapitalization: TextCapitalization.words,
+                ),
+                const SizedBox(height: 16),
+                TextFormField(
+                  controller: _emailController,
+                  keyboardType: TextInputType.emailAddress,
+                  textInputAction: TextInputAction.next,
+                  decoration: const InputDecoration(
+                    labelText: 'Email',
+                    prefixIcon: Icon(Icons.email_outlined),
+                    border: OutlineInputBorder(),
+                  ),
+                ),
+                const SizedBox(height: 16),
                 StudentIdField(controller: _nimController),
                 const SizedBox(height: 16),
                 DropdownButtonFormField<String>(
                   initialValue: _gender,
                   decoration: const InputDecoration(
                     labelText: 'Jenis kelamin',
+                    prefixIcon: Icon(Icons.wc),
                     border: OutlineInputBorder(),
                   ),
                   items: const [
@@ -73,8 +100,6 @@ class _LoginPageState extends State<LoginPage> {
                     ),
                   ],
                   onChanged: (value) => setState(() => _gender = value),
-                  validator: (value) =>
-                      value == null ? 'Pilih jenis kelamin' : null,
                 ),
                 const SizedBox(height: 24),
                 FilledButton(

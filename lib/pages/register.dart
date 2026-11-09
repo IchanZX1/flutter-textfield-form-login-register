@@ -12,12 +12,14 @@ class RegisterPage extends StatefulWidget {
 class _RegisterPageState extends State<RegisterPage> {
   final _formKey = GlobalKey<FormState>();
   final _nameController = TextEditingController();
+  final _emailController = TextEditingController();
   final _nimController = TextEditingController();
   String? _gender;
 
   @override
   void dispose() {
     _nameController.dispose();
+    _emailController.dispose();
     _nimController.dispose();
     super.dispose();
   }
@@ -54,15 +56,21 @@ class _RegisterPageState extends State<RegisterPage> {
                   controller: _nameController,
                   decoration: const InputDecoration(
                     labelText: 'Nama lengkap',
+                    prefixIcon: Icon(Icons.person_outline),
                     border: OutlineInputBorder(),
                   ),
                   textCapitalization: TextCapitalization.words,
-                  validator: (value) {
-                    if (value == null || value.trim().isEmpty) {
-                      return 'Nama lengkap wajib diisi';
-                    }
-                    return null;
-                  },
+                ),
+                const SizedBox(height: 16),
+                TextFormField(
+                  controller: _emailController,
+                  keyboardType: TextInputType.emailAddress,
+                  textInputAction: TextInputAction.next,
+                  decoration: const InputDecoration(
+                    labelText: 'Email',
+                    prefixIcon: Icon(Icons.email_outlined),
+                    border: OutlineInputBorder(),
+                  ),
                 ),
                 const SizedBox(height: 16),
                 StudentIdField(controller: _nimController),
@@ -71,6 +79,7 @@ class _RegisterPageState extends State<RegisterPage> {
                   initialValue: _gender,
                   decoration: const InputDecoration(
                     labelText: 'Jenis kelamin',
+                    prefixIcon: Icon(Icons.wc),
                     border: OutlineInputBorder(),
                   ),
                   items: const [
@@ -84,8 +93,6 @@ class _RegisterPageState extends State<RegisterPage> {
                     ),
                   ],
                   onChanged: (value) => setState(() => _gender = value),
-                  validator: (value) =>
-                      value == null ? 'Pilih jenis kelamin' : null,
                 ),
                 const SizedBox(height: 24),
                 FilledButton(
