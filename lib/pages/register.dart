@@ -14,6 +14,8 @@ class _RegisterPageState extends State<RegisterPage> {
   final _nameController = TextEditingController();
   final _emailController = TextEditingController();
   final _nimController = TextEditingController();
+  final _phoneController = TextEditingController();
+  final _addressController = TextEditingController();
   String? _gender;
 
   @override
@@ -21,6 +23,8 @@ class _RegisterPageState extends State<RegisterPage> {
     _nameController.dispose();
     _emailController.dispose();
     _nimController.dispose();
+    _phoneController.dispose();
+    _addressController.dispose();
     super.dispose();
   }
 
@@ -74,6 +78,29 @@ class _RegisterPageState extends State<RegisterPage> {
                 ),
                 const SizedBox(height: 16),
                 StudentIdField(controller: _nimController),
+                const SizedBox(height: 16),
+                // TextFormField No HP
+                TextFormField(
+                  controller: _phoneController,
+                  keyboardType: TextInputType.phone,
+                  decoration: const InputDecoration(
+                    labelText: 'Nomor HP',
+                    prefixIcon: Icon(Icons.phone_outlined),
+                    border: OutlineInputBorder(),
+                  ),
+                ),
+                const SizedBox(height: 16),
+                // TextFormField Alamat
+                TextFormField(
+                  controller: _addressController,
+                  keyboardType: TextInputType.streetAddress,
+                  maxLines: 3,
+                  decoration: const InputDecoration(
+                    labelText: 'Alamat',
+                    prefixIcon: Icon(Icons.home_outlined),
+                    border: OutlineInputBorder(),
+                  ),
+                ),
                 const SizedBox(height: 16),
                 DropdownButtonFormField<String>(
                   initialValue: _gender,
