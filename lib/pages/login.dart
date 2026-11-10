@@ -71,6 +71,12 @@ class _LoginPageState extends State<LoginPage> {
                     border: OutlineInputBorder(),
                   ),
                   textCapitalization: TextCapitalization.words,
+                  validator: (value) {
+                    if (value == null || value.trim().isEmpty) {
+                      return 'Nama lengkap wajib diisi';
+                    }
+                    return null;
+                  },
                 ),
                 const SizedBox(height: 16),
                 TextFormField(
@@ -82,6 +88,17 @@ class _LoginPageState extends State<LoginPage> {
                     prefixIcon: Icon(Icons.email_outlined),
                     border: OutlineInputBorder(),
                   ),
+                  validator: (value) {
+                    if (value == null || value.trim().isEmpty) {
+                      return 'Email wajib diisi';
+                    }
+                    if (!RegExp(r'^[^@\s]+@[^@\s]+\.[^@\s]+$').hasMatch(
+                      value.trim(),
+                    )) {
+                      return 'Format email tidak valid';
+                    }
+                    return null;
+                  },
                 ),
                 const SizedBox(height: 16),
                 StudentIdField(controller: _nimController),
@@ -105,6 +122,8 @@ class _LoginPageState extends State<LoginPage> {
                     ),
                   ],
                   onChanged: (value) => setState(() => _gender = value),
+                  validator: (value) =>
+                      value == null ? 'Pilih jenis kelamin' : null,
                 ),
                 const SizedBox(height: 16),
 

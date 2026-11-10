@@ -29,6 +29,17 @@ class StudentIdField extends StatelessWidget {
           );
         }),
       ],
+      validator: _validate,
     );
+  }
+
+  String? _validate(String? value) {
+    if (value == null || value.isEmpty) {
+      return 'NIM wajib diisi';
+    }
+    if (!RegExp(r'^[A-G]\d{8}$').hasMatch(value)) {
+      return 'Format NIM harus 1 huruf A-G dan 8 angka';
+    }
+    return null;
   }
 }
