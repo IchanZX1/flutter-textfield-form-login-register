@@ -17,6 +17,7 @@ class _LoginPageState extends State<LoginPage> {
   final _nimController = TextEditingController();
   final _phoneController = TextEditingController();
   final _addressController = TextEditingController();
+  final _birthDateController = TextEditingController();
   String? _gender;
 
   @override
@@ -26,7 +27,23 @@ class _LoginPageState extends State<LoginPage> {
     _nimController.dispose();
     _phoneController.dispose();
     _addressController.dispose();
+    _birthDateController.dispose();
     super.dispose();
+    super.dispose();
+  }
+
+Future<void> _selectDate() async {
+    final DateTime? picked = await showDatePicker(
+      context: context,
+      initialDate: DateTime(2000, 1, 1),
+      firstDate: DateTime(1950),
+      lastDate: DateTime.now(),
+    );
+    if (picked != null) {
+      setState(() {
+        _birthDateController.text = "${picked.year}-${picked.month.toString().padLeft(2, '0')}-${picked.day.toString().padLeft(2, '0')}";
+      });
+    }
   }
 
   void _submitForm() {
@@ -108,6 +125,28 @@ class _LoginPageState extends State<LoginPage> {
                 ),
                 const SizedBox(height: 16),
 
+// ==========================================
+                // TAMBAHAN: Input Tanggal Lahir (Date Picker)
+                // ==========================================
+                TextFormField(
+                  controller: _birthDateController,
+                  readOnly: true,
+                  decoration: const InputDecoration(
+                    labelText: 'Tanggal lahir',
+                    prefixIcon: Icon(Icons.calendar_today),
+                    border: OutlineInputBorder(),
+                  ),
+                  onTap: _selectDate,
+                  validator: (value) {
+                    if (value == null || value.isEmpty) {
+                      return 'Tanggal lahir tidak boleh kosong';
+                    }
+                    return null;
+                  },
+                ),
+                const SizedBox(height: 16),
+
+                
                 // TextFormField No HP
                 TextFormField(
                   controller: _phoneController,

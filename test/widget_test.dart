@@ -17,6 +17,7 @@ void main() {
     expect(find.text('Email'), findsOneWidget);
     expect(find.text('NIM'), findsOneWidget);
     expect(find.text('Jenis kelamin'), findsOneWidget);
+    expect(find.text('Tanggal lahir'), findsOneWidget);
     expect(
       tester.getTopLeft(find.text('Nama lengkap')).dy,
       lessThan(tester.getTopLeft(find.text('Email')).dy),
@@ -44,6 +45,14 @@ void main() {
     await tester.tap(find.text('Perempuan').last);
     await tester.pumpAndSettle();
 
+    // Pilih tanggal lahir (memicu DatePicker)
+    await tester.ensureVisible(find.widgetWithText(TextFormField, 'Tanggal lahir'));
+    await tester.tap(find.widgetWithText(TextFormField, 'Tanggal lahir'));
+    await tester.pumpAndSettle();
+    // Mengetuk tombol OK pada dialog date picker bawaan Flutter
+    await tester.tap(find.text('OK'));
+    await tester.pumpAndSettle();
+
     await tester.ensureVisible(find.text('Masuk'));
     await tester.tap(find.text('Masuk'));
     await tester.pump();
@@ -67,6 +76,7 @@ void main() {
     expect(inRegister(find.text('Email')), findsOneWidget);
     expect(inRegister(find.text('NIM')), findsOneWidget);
     expect(inRegister(find.text('Jenis kelamin')), findsOneWidget);
+    expect(inRegister(find.text('Tanggal lahir')), findsOneWidget);
 
     await tester.enterText(
       inRegister(find.widgetWithText(TextFormField, 'Nama lengkap')),
@@ -85,6 +95,14 @@ void main() {
     await tester.tap(dropdown);
     await tester.pumpAndSettle();
     await tester.tap(find.text('Laki-laki').last);
+    await tester.pumpAndSettle();
+
+    // Pilih tanggal lahir di halaman register
+    final tglLahirField = inRegister(find.widgetWithText(TextFormField, 'Tanggal lahir'));
+    await tester.ensureVisible(tglLahirField);
+    await tester.tap(tglLahirField);
+    await tester.pumpAndSettle();
+    await tester.tap(find.text('OK'));
     await tester.pumpAndSettle();
 
     await tester.ensureVisible(find.text('Daftar'));
