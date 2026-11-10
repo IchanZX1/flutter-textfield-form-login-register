@@ -35,7 +35,7 @@ Future<void> _selectDate() async {
     final DateTime? picked = await showDatePicker(
       context: context,
       initialDate: DateTime(2000, 1, 1),
-      firstDate: DateTime(1950),
+      firstDate: DateTime(1996),
       lastDate: DateTime.now(),
     );
     if (picked != null) {
