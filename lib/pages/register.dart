@@ -57,7 +57,7 @@ Future<void> _selectDate() async {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: const Text('Daftar Mahasiswa')),
+      appBar: AppBar(title: const Text('Daftar Mahasiswa'), backgroundColor: Colors.amber),
       body: SafeArea(
         child: SingleChildScrollView(
           padding: const EdgeInsets.all(24),
